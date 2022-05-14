@@ -12,4 +12,8 @@ export class UserService {
   async save(options): Promise<User> {
     return this.userRepository.save(options);
   }
+
+  async findOne(options): Promise<User> {
+    return this.userRepository.findOne(options);
+  }
 }
