@@ -8,6 +8,7 @@ import {
   Post,
   Req,
   Res,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
@@ -15,6 +16,7 @@ import { RegisterDto } from './dtos/register.dto';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { Response, Request } from 'express';
+import { AuthGuard } from './auth.guard';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller()
@@ -69,6 +71,7 @@ export class AuthController {
     return { message: 'success' };
   }
 
+  @UseGuards(AuthGuard)
   @Get('admin/user')
   async user(@Req() request: Request) {
     const cookie = request.cookies.jwt;
@@ -76,5 +79,13 @@ export class AuthController {
     const { id } = await this.jwtService.verifyAsync(cookie);
 
     return this.userService.findOne({ id });
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('admin/logout')
+  async logout(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie('jwt');
+
+    return { message: 'success' };
   }
 }
