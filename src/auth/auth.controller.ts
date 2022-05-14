@@ -26,6 +26,7 @@ export class AuthController {
 
   @Post('admin/register')
   async register(@Body() body: RegisterDto) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordConfirm, ...data } = body;
 
     if (body.password !== body.passwordConfirm) {
