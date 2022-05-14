@@ -8,6 +8,8 @@ WORKDIR /app
 # Copy package.json for depencency install
 COPY package.json .
 COPY ./yarn.lock .
+COPY tsconfig.json .
+COPY tsconfig.build.json .
 
 # Install dependencies
 RUN ["yarn"]
@@ -15,5 +17,8 @@ RUN ["yarn"]
 # Copy the rest of the project
 COPY /src /src
 
+# Build the project
+RUN ["yarn", "build"]
+
 # Start the application
-CMD ["yarn", "start:dev"]
+CMD ["yarn", "start"]

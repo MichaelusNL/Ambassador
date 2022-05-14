@@ -1,5 +1,18 @@
 version: '3.9'
 services:
+  backend:
+    build: .
+    ports:
+      - '8000:3000'
+    volumes:
+      - .:/app
+    environment:
+      MYSQL_HOST: 'db'
+      MYSQL_PORT: '3306'
+      ENV: 'prd'
+    depends_on:
+      - db
+
   db:
     image: mysql:5.7.22
     restart: always

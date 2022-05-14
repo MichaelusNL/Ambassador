@@ -4,13 +4,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import config from './config';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'db',
-      port: 3306,
+      host: config.mysql.host,
+      port: config.mysql.port,
       username: 'root',
       password: 'root',
       database: 'ambassador',
